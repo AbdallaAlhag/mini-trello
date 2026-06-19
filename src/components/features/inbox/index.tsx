@@ -47,7 +47,7 @@ export function Inbox() {
       </header>
       {/* scroll area, add card button, then create cards component */}
       <main className="bg-[#182E51] h-full rounded-b-xl flex flex-col p-2 min-h-0">
-        <Button className="bg-[#242528] border border-gray-700 shadow-sm justify-start h-10 text-md text-gray-400 hover:bg-zinc-600 hover:border-gray-500">
+        <Button className="bg-[#242528] border border-gray-700 shadow-sm justify-start h-10 text-md text-gray-400 hover:bg-zinc-600 hover:border-gray-500 text-lg">
           Add a card
         </Button>
         <ScrollArea className="flex-1 min-h-0 pt-3">

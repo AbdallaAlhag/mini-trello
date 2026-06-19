@@ -51,7 +51,7 @@ export function Header() {
           <Input
             type="search"
             placeholder="Search"
-            className="w-full pl-9 pr-3 py-2 rounded-sm bg-transparent border-2 border-gray-400 text-sm text-white focus-visible:border-blue-300 focus-visible:ring-0 focus-visible:ring-offset-0 placeholder:text-muted-foreground"
+            className="w-full pl-9 pr-3 py-2 rounded-sm bg-transparent border-2 border-gray-400 text-sm text-white focus-visible:border-blue-300 focus-visible:ring-0 focus-visible:ring-offset-0 placeholder:text-muted-foreground hover:bg-zinc-800"
           />
         </div>
         <Button className="bg-[#669DF1] hover:bg-[#86B0FF] rounded-sm mx-2 text-black font-normal text-md">

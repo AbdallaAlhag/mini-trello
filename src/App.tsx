@@ -6,9 +6,9 @@ import { Control } from "./components/features/control";
 
 function App() {
   return (
-    <div className="fixed inset-0 w-screen h-screen bg-[#1F1F21] text-white antialiased m-0 p-3 flex flex-col gap-3">
+    <div className="fixed inset-0 w-screen h-screen  bg-[#1F1F21] text-white antialiased m-0 p-3 flex flex-col gap-3">
       <Header />
-      <main className="flex h-full">
+      <main className="relative flex h-full">
         <Inbox />
         <Planner />
         <Board />
