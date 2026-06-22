@@ -34,24 +34,28 @@ export function Inbox() {
     "film edit",
   ];
   return (
-    <div className="flex flex-col border-2 border-solid border-gray-700 rounded-xl w-[30%]">
+    <div className="flex flex-col border-2 border-solid border-gray-700 rounded-xl w-full">
       <header className="flex items-center justify-between bg-[#142238] rounded-t-xl h-20">
         <div className="flex p-3 gap-3 items-center">
           <InboxIcon />
           <span className="font-bold text-lg">Inbox</span>
         </div>
         <div className="flex p-3 gap-3">
-          <ListFilter />
-          <Ellipsis />
+          <Button>
+            <ListFilter />
+          </Button>
+          <Button>
+            <Ellipsis />
+          </Button>
         </div>
       </header>
       {/* scroll area, add card button, then create cards component */}
-      <main className="bg-[#182E51] h-full rounded-b-xl flex flex-col p-2 min-h-0">
-        <Button className="bg-[#242528] border border-gray-700 shadow-sm justify-start h-10 text-md text-gray-400 hover:bg-zinc-600 hover:border-gray-500 text-lg">
+      <main className="bg-[#182E51] rounded-b-xl flex flex-col p-2 min-h-0">
+        <Button className="bg-[#242528] border border-gray-700 shadow-sm justify-start h-10 text-md text-gray-400 hover:bg-zinc-600 hover:border-gray-500 text-lg rounded-md">
           Add a card
         </Button>
         <ScrollArea className="flex-1 min-h-0 pt-3">
-          <div className="flex flex-col gap-3 m-1 mb-15">
+          <div className="flex flex-col gap-3 m-1 mb-15 mr-4">
             {cards.map((card, index) => (
               <Card key={index}></Card>
             ))}

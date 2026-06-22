@@ -1,18 +1,18 @@
 import { Header } from "./components/features/header";
 import { Inbox } from "./components/features/inbox";
-import { Planner } from "./components/features/planner";
+// import { Planner } from "./components/features/planner";
 import { Board } from "./components/features/board";
-import { Control } from "./components/features/control";
+import { Island } from "./components/features/island";
 
 function App() {
   return (
-    <div className="fixed inset-0 w-screen h-screen  bg-[#1F1F21] text-white antialiased m-0 p-3 flex flex-col gap-3">
+    <div className="fixed inset-0 bg-[#1F1F21] text-white antialiased m-0 p-3 flex flex-col gap-3">
       <Header />
-      <main className="relative flex h-full">
+      <main className="relative flex gap-3 w-full pb-50">
         <Inbox />
-        <Planner />
+        {/* <Planner /> */}
         <Board />
-        <Control />
+        <Island />
       </main>
     </div>
   );

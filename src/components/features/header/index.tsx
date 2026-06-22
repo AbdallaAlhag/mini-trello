@@ -15,10 +15,10 @@ export function Header() {
   return (
     <div className="flex items-center justify-between">
       <div className="flex">
-        <Button variant="trello" size="trelloNav">
+        <Button>
           <LayoutDashboard className={iconStyle} />
         </Button>
-        <Button variant="trello" size="trelloNav">
+        <Button>
           <svg
             role="img"
             viewBox="0 0 24 24"
@@ -26,17 +26,14 @@ export function Header() {
             xmlns="http://w3.org"
           >
             <title>Trello</title>
-            {/* 1. Main Outer Container - Filled Blue */}
             <path
               fill="#0055cc"
               d="M19.43 0H4.57A4.58 4.58 0 0 0 0 4.57v14.86A4.58 4.58 0 0 0 4.57 24h14.86A4.58 4.58 0 0 0 24 19.43V4.57A4.58 4.58 0 0 0 19.43 0z"
             />
-            {/* 2. Left Short Column - Filled White */}
             <path
               fill="#ffffff"
               d="M8.57 3.43H5.15A1.72 1.72 0 0 0 3.43 5.15v12a1.72 1.72 0 0 0 1.72 1.72h3.42a1.72 1.72 0 0 0 1.72-1.72v-12a1.72 1.72 0 0 0-1.72-1.72z"
             />
-            {/* 3. Right Tall Column - Filled White */}
             <path
               fill="#ffffff"
               d="M18.85 3.43h-3.42a1.72 1.72 0 0 0-1.72 1.72v6.85a1.72 1.72 0 0 0 1.72 1.72h3.42a1.72 1.72 0 0 0 1.72-1.72V5.15a1.72 1.72 0 0 0-1.72-1.72z"
@@ -59,16 +56,16 @@ export function Header() {
         </Button>
       </div>
       <div className="flex">
-        <Button variant="trello" size="trelloNav">
+        <Button>
           <Megaphone className="size-6 stroke-1" />
         </Button>
-        <Button variant="trello" size="trelloNav">
+        <Button>
           <Bell className="size-6 stroke-1" />
         </Button>
-        <Button variant="trello" size="trelloNav">
+        <Button>
           <CircleQuestionMark className="size-6 stroke-1" />
         </Button>
-        <Button variant="trello" size="trelloNav">
+        <Button>
           <CircleUserRound className="size-6 stroke-1 " />
         </Button>
       </div>
