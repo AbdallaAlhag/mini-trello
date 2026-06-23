@@ -1,7 +1,7 @@
 import { ChevronsRightLeft, Ellipsis, Plus, SquarePlus } from "lucide-react";
 import { Button } from "../ui/button";
 import { Card } from "./card";
-import { ScrollArea } from "../ui/scroll-area";
+import { ScrollArea, ScrollBar } from "../ui/scroll-area";
 
 interface ColumnProps {
   column: {
@@ -11,14 +11,38 @@ interface ColumnProps {
   };
 }
 
+const cards = [
+  "hw",
+  "run",
+  "film edit",
+  "run",
+  "film edit",
+  "run",
+  "film edit",
+  "run",
+  "film edit",
+  "run",
+  "film edit",
+  "film edit",
+  "run",
+  "film edit",
+  "film edit",
+  "run",
+  "film edit",
+  "film edit",
+  "run",
+  "film edit",
+  "film edit",
+  "run",
+  "film edit",
+];
 export function Column({ column }: ColumnProps) {
-  const cards = ["hw", "run", "film edit"];
   return (
-    <ScrollArea
+    <div
       style={{ backgroundColor: `${column.background}` }}
-      className="${columnBackground} py-2 px-3 rounded-lg shadow-md/40"
+      className="py-2 px-3 rounded-lg shadow-md/40 h-full max-h-[calc(100vh-18rem)] flex flex-col overflow-hidden"
     >
-      <header className="flex justify-between items-center text-gray-300">
+      <header className="flex justify-between items-center text-gray-300 shrink-0">
         <h1 className="font-bold pl-3">{column.title}</h1>
         <div className="flex items-center">
           {/* TODO: card count */}
@@ -31,15 +55,15 @@ export function Column({ column }: ColumnProps) {
           </Button>
         </div>
       </header>
-      {/* All cards go in main */}
-      <main>
-        <div className="flex flex-col gap-1 ">
+      <ScrollArea className="flex-1  min-h-0 my-2 ">
+        <div className="flex flex-col gap-1 pr-3">
           {cards.map((card, index) => (
             <Card key={index}></Card>
           ))}
         </div>
-      </main>
-      <div className="flex items-center gap-1 pt-2">
+        <ScrollBar />
+      </ScrollArea>
+      <footer className="flex items-center gap-1 pt-2 shrink-0">
         <Button className="flex-1 items-center justify-start p-1 rounded-sm">
           <Plus color="#e2e8f0" />
 
@@ -48,7 +72,7 @@ export function Column({ column }: ColumnProps) {
         <Button>
           <SquarePlus color="#e2e8f0" />
         </Button>
-      </div>
-    </ScrollArea>
+      </footer>
+    </div>
   );
 }

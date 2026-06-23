@@ -20,7 +20,7 @@ export function Island() {
     { label: "Board", Icon: SquareKanban },
   ];
   return (
-    <div className="absolute bottom-10 left-1/2 -translate-x-1/2 z-10 w-11/12 max-w-lg p-2 bg-[#18191A] border border-gray-800 rounded-xl shadow-xl ">
+    <div className="absolute bottom-0 left-1/2 -translate-x-1/2 z-10 w-11/12 max-w-lg p-2 bg-[#18191A] border border-gray-800 rounded-xl shadow-xl ">
       <div className="flex gap-2.5 ">
         {navItems.map((item, index) => {
           const { Icon, label } = item;
