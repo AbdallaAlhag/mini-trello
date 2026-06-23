@@ -2,7 +2,12 @@ import { SquarePen } from "lucide-react";
 import { Button } from "../ui/button";
 import { Checkbox } from "../ui/checkbox";
 
-export function Card() {
+import type { CardInterface } from "../../types.ts";
+
+interface CardProps {
+  card: CardInterface;
+}
+export function Card({ card }: CardProps) {
   return (
     // change to outer button to div in order to allow inner buttons working
     <div
@@ -15,7 +20,7 @@ export function Card() {
           id="card-complete"
           defaultChecked={false}
         />
-        <span className="text-normal font-bold">Card title goes here</span>
+        <span className="text-normal font-bold">{card.title}</span>
       </div>
       <Button className="bg-transparent  pr-0 mr-0 opacity-0 group-hover:opacity-100">
         <SquarePen />

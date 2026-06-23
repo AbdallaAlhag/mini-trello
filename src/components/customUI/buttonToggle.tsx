@@ -15,6 +15,7 @@ interface ButtonToggleProps {
   cancel?: boolean;
   background?: boolean;
   children: ReactNode;
+  addFn: (title: string) => void;
 }
 
 export function ButtonToggle({
@@ -22,6 +23,7 @@ export function ButtonToggle({
   cancel = false,
   background = false,
   children,
+  addFn
 }: ButtonToggleProps) {
   const [isEditing, setIsEditing] = useState(false);
   const [inputValue, setInputValue] = useState("");
@@ -29,8 +31,9 @@ export function ButtonToggle({
   const handleAdd = () => {
     if (!inputValue.trim()) return;
     console.log("Adding card:", inputValue);
+    addFn(inputValue)
     setInputValue("");
-    setIsEditing(false); // Close after adding
+    setIsEditing(false); 
   };
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -46,18 +49,15 @@ export function ButtonToggle({
       }
     }
 
-    // NEW: Handles pressing the Escape key down globally
     function handleKeyDown(event: KeyboardEvent) {
       if (event.key === "Escape") {
         setIsEditing(false);
       }
     }
 
-    // Attach both browser event listeners
     document.addEventListener("mousedown", handleClickOutside);
     document.addEventListener("keydown", handleKeyDown);
 
-    // Clean up both browser event listeners when component closes or destroys
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
       document.removeEventListener("keydown", handleKeyDown);

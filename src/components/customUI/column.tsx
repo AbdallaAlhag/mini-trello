@@ -1,43 +1,25 @@
-import { ChevronsRightLeft, Ellipsis, Plus, SquarePlus } from "lucide-react";
+import { ChevronsRightLeft, Ellipsis, Plus,  } from "lucide-react";
 import { Button } from "../ui/button";
 import { Card } from "./card";
 import { ScrollArea, ScrollBar } from "../ui/scroll-area";
 import { ButtonToggle } from "./buttonToggle";
+import type { ColumnInterface, CardInterface } from "../../types.ts";
+import { useState } from "react";
 
 interface ColumnProps {
-  column: {
-    id: string;
-    title: string;
-    background: string;
-  };
+  column: ColumnInterface;
 }
 
-const cards = [
-  "hw",
-  "run",
-  "film edit",
-  "run",
-  "film edit",
-  "run",
-  "film edit",
-  "run",
-  "film edit",
-  "run",
-  "film edit",
-  "film edit",
-  "run",
-  "film edit",
-  "film edit",
-  "run",
-  "film edit",
-  "film edit",
-  "run",
-  "film edit",
-  "film edit",
-  "run",
-  "film edit",
-];
-export function Column({ column }: ColumnProps) {
+
+export function Column({ column }: ColumnProps) {  const [cards, setCards] = useState<CardInterface[]>([
+    { title: "hw", id: crypto.randomUUID() },
+    { title: "fix tv", id: crypto.randomUUID() },
+    { title: "run miles", id: crypto.randomUUID() },
+  ]);
+
+  function handleAddCard(title: string){
+    setCards([...cards, {title: title, id: crypto.randomUUID()}])
+  }
   return (
     <div
       style={{ backgroundColor: `${column.background}` }}
@@ -59,7 +41,7 @@ export function Column({ column }: ColumnProps) {
       <ScrollArea className="flex-1  min-h-0 my-2 ">
         <div className="flex flex-col gap-1 pr-3">
           {cards.map((card, index) => (
-            <Card key={index}></Card>
+            <Card key={card.id} card={card}></Card>
           ))}
         </div>
         <ScrollBar />
@@ -73,7 +55,7 @@ export function Column({ column }: ColumnProps) {
         {/* <Button> */}
         {/*   <SquarePlus color="#e2e8f0" /> */}
         {/* </Button>{" "} */}
-        <ButtonToggle placeHolder="Enter a title or paste a link">
+        <ButtonToggle placeHolder="Enter a title or paste a link" addFn={handleAddCard}>
           <Button className="flex-1 items-center justify-start p-1 rounded-sm">
             <Plus color="#e2e8f0" />
             <span className="pl-1">Add a card</span>

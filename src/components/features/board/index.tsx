@@ -12,12 +12,16 @@ import {
   UserRoundArrowLeft,
   Users,
 } from "lucide-react";
-
-const columns = [
-  { id: crypto.randomUUID(), title: "Today", background: "#533F04" },
-  { id: crypto.randomUUID(), title: "Today", background: "#164B35" },
-];
+import type { ColumnInterface } from '../../../types.ts'
+import { useState } from "react";
 export function Board() {
+  const [columns, setColumns] = useState<ColumnInterface[]>([
+  { id: crypto.randomUUID(), title: "Yesterday", background: "#533F04" },
+  { id: crypto.randomUUID(), title: "Today", background: "#164B35" },
+]);
+  function handleAddColumn(title: string){
+    setColumns([...columns, {title: title, id: crypto.randomUUID(), background: "#101204"}])
+  }
   return (
     <div className="flex flex-col border-2 border-solid border-gray-700 rounded-xl overflow-hidden w-full">
       <header className="flex items-center justify-between bg-linear-to-r from-violet-900 to-gray-700 rounded-t-xl h-20">
@@ -57,7 +61,7 @@ export function Board() {
               </div>
             ))}
             <div className="w-64">
-              <ButtonToggle placeHolder="Enter a title" background={true}>
+              <ButtonToggle placeHolder="Enter a title" background={true} addFn={handleAddColumn}>
                 <Button className="w-64 h-10 items-center justify-start p-3 rounded-sm shrink-0 bg-gray-400 opacity-85">
                   <Plus color="#e2e8f0 " />
                   <span className="pl-1">Add another list</span>
