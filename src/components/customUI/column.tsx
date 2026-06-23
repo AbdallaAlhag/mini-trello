@@ -2,6 +2,7 @@ import { ChevronsRightLeft, Ellipsis, Plus, SquarePlus } from "lucide-react";
 import { Button } from "../ui/button";
 import { Card } from "./card";
 import { ScrollArea, ScrollBar } from "../ui/scroll-area";
+import { ButtonToggle } from "./buttonToggle";
 
 interface ColumnProps {
   column: {
@@ -64,14 +65,24 @@ export function Column({ column }: ColumnProps) {
         <ScrollBar />
       </ScrollArea>
       <footer className="flex items-center gap-1 pt-2 shrink-0">
-        <Button className="flex-1 items-center justify-start p-1 rounded-sm">
-          <Plus color="#e2e8f0" />
-
-          <span className="pl-1">Add a card</span>
-        </Button>
-        <Button>
-          <SquarePlus color="#e2e8f0" />
-        </Button>
+        {/* <Button className="flex-1 items-center justify-start p-1 rounded-sm"> */}
+        {/*   <Plus color="#e2e8f0" /> */}
+        {/**/}
+        {/*   <span className="pl-1">Add a card</span> */}
+        {/* </Button> */}
+        {/* <Button> */}
+        {/*   <SquarePlus color="#e2e8f0" /> */}
+        {/* </Button>{" "} */}
+        <ButtonToggle placeHolder="Enter a title or paste a link">
+          <Button className="flex-1 items-center justify-start p-1 rounded-sm">
+            <Plus color="#e2e8f0" />
+            <span className="pl-1">Add a card</span>
+          </Button>
+          {/* TODO: deal with template later */}
+          {/* <Button> */}
+          {/*   <SquarePlus color="#e2e8f0" /> */}
+          {/* </Button>{" "} */}
+        </ButtonToggle>
       </footer>
     </div>
   );

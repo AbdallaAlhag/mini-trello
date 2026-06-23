@@ -1,3 +1,4 @@
+import { ButtonToggle } from "@/components/customUI/buttonToggle";
 import { Column } from "@/components/customUI/column";
 import { Button } from "@/components/ui/button";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
@@ -55,10 +56,14 @@ export function Board() {
                 <Column column={column}></Column>
               </div>
             ))}
-            <Button className="w-64 h-10 items-center justify-start p-3 rounded-sm shrink-0 bg-gray-400 opacity-85">
-              <Plus color="#e2e8f0 " />
-              <span className="pl-1">Add another list</span>
-            </Button>{" "}
+            <div className="w-64">
+              <ButtonToggle placeHolder="Enter a title" background={true}>
+                <Button className="w-64 h-10 items-center justify-start p-3 rounded-sm shrink-0 bg-gray-400 opacity-85">
+                  <Plus color="#e2e8f0 " />
+                  <span className="pl-1">Add another list</span>
+                </Button>
+              </ButtonToggle>
+            </div>
           </div>
           <ScrollBar orientation="horizontal" />
         </ScrollArea>
