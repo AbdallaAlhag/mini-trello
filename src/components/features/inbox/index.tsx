@@ -1,4 +1,4 @@
-import { Card } from "@/components/customUI/card";
+import { Card, CardStatic } from "@/components/customUI/card";
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Ellipsis, Inbox as InboxIcon, ListFilter } from "lucide-react";
@@ -6,26 +6,14 @@ import { useState } from "react";
 import { ButtonToggle } from "@/components/customUI/buttonToggle";
 import type { CardInterface } from "../../../types.ts";
 
-export function Inbox() {
-  const [cards, setCards] = useState<CardInterface[]>([
-    { title: "hw", id: crypto.randomUUID(), isChecked: false },
-    { title: "fix tv", id: crypto.randomUUID(), isChecked: false },
-    { title: "run miles", id: crypto.randomUUID(), isChecked: false },
-  ]);
-  function handleAddCard(title: string) {
-    setCards([
-      ...cards,
-      { title: title, id: crypto.randomUUID(), isChecked: false },
-    ]);
-  }
-  const handleToggleCard = (cardId: string, newCheckedState: boolean) => {
-    setCards((prevCards) =>
-      prevCards.map((card) =>
-        card.id === cardId ? { ...card, isChecked: newCheckedState } : card,
-      ),
-    );
-  };
+import { DragOverlay } from "@dnd-kit/react";
 
+import { useColumns } from "../../../ColumnProvider";
+
+export function Inbox() {
+  const { columns, handleAddCard, handleToggleCard } = useColumns();
+  const cards = columns[0].cards;
+  const columnId = columns[0].id;
   return (
     <div className="flex flex-col border-2 border-solid border-gray-700 rounded-xl w-[35%] ">
       <header className="flex items-center justify-between bg-[#142238] rounded-t-xl h-20">
@@ -44,6 +32,7 @@ export function Inbox() {
       </header>
       <main className="bg-[#182E51] rounded-b-xl flex flex-1 flex-col p-2 min-h-0">
         <ButtonToggle
+          columnId={columnId}
           placeHolder="Enter a title"
           cancel={true}
           background={true}
@@ -57,12 +46,27 @@ export function Inbox() {
           <div className="flex flex-col gap-3 m-1 mb-15 mr-4">
             {cards.map((card, index) => (
               <Card
-                key={index}
+                columnId={columnId}
+                index={index}
+                key={card.id}
                 card={card}
                 onToggleComplete={handleToggleCard}
               ></Card>
             ))}
           </div>
+          <DragOverlay>
+            {(source) => {
+              const activeCardData = source.data as any;
+              return (
+                <CardStatic
+                  columnId={columnId}
+                  card={activeCardData}
+                  isOverlay={true}
+                  onToggleComplete={handleToggleCard}
+                />
+              );
+            }}
+          </DragOverlay>
         </ScrollArea>
       </main>
     </div>

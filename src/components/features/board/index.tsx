@@ -12,19 +12,11 @@ import {
   UserRoundArrowLeft,
   Users,
 } from "lucide-react";
-import type { ColumnInterface } from "../../../types.ts";
-import { useState } from "react";
+import { useColumns } from "../../../ColumnProvider";
+
 export function Board() {
-  const [columns, setColumns] = useState<ColumnInterface[]>([
-    { id: crypto.randomUUID(), title: "Yesterday", background: "#533F04" },
-    { id: crypto.randomUUID(), title: "Today", background: "#164B35" },
-  ]);
-  function handleAddColumn(title: string) {
-    setColumns([
-      ...columns,
-      { title: title, id: crypto.randomUUID(), background: "#101204" },
-    ]);
-  }
+  const { columns, handleAddColumn } = useColumns();
+
   return (
     <div className="flex flex-col border-2 border-solid border-gray-700 rounded-xl overflow-hidden w-full">
       <header className="flex items-center justify-between bg-linear-to-r from-violet-900 to-gray-700 rounded-t-xl h-20">
@@ -65,6 +57,8 @@ export function Board() {
             ))}
             <div className="w-64">
               <ButtonToggle
+                // I could make this optional but for now this is fine
+                columnId={"000"}
                 placeHolder="Enter a title"
                 background={true}
                 addFn={handleAddColumn}

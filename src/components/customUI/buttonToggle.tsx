@@ -11,19 +11,21 @@ import { Textarea } from "../ui/textarea";
 import { X } from "lucide-react";
 
 interface ButtonToggleProps {
+  columnId: string;
   placeHolder: string;
   cancel?: boolean;
   background?: boolean;
   children: ReactNode;
-  addFn: (title: string) => void;
+  addFn: (columId: string, title: string) => void;
 }
 
 export function ButtonToggle({
+  columnId,
   placeHolder,
   cancel = false,
   background = false,
   children,
-  addFn
+  addFn,
 }: ButtonToggleProps) {
   const [isEditing, setIsEditing] = useState(false);
   const [inputValue, setInputValue] = useState("");
@@ -31,9 +33,9 @@ export function ButtonToggle({
   const handleAdd = () => {
     if (!inputValue.trim()) return;
     console.log("Adding card:", inputValue);
-    addFn(inputValue)
+    addFn(columnId, inputValue);
     setInputValue("");
-    setIsEditing(false); 
+    setIsEditing(false);
   };
   const containerRef = useRef<HTMLDivElement>(null);
 

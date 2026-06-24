@@ -1,46 +1,34 @@
 import { ChevronsRightLeft, Ellipsis, Plus } from "lucide-react";
 import { Button } from "../ui/button";
-import { Card } from "./card";
+import { Card, CardStatic } from "./card";
 import { ScrollArea, ScrollBar } from "../ui/scroll-area";
 import { ButtonToggle } from "./buttonToggle";
 import type { ColumnInterface, CardInterface } from "../../types.ts";
 import { useState } from "react";
+
+import { DragOverlay, useDroppable } from "@dnd-kit/react";
+import { useColumns } from "@/ColumnProvider.tsx";
 
 interface ColumnProps {
   column: ColumnInterface;
 }
 
 export function Column({ column }: ColumnProps) {
-  const [cards, setCards] = useState<CardInterface[]>([
-    { title: "hw", id: crypto.randomUUID(), isChecked: false },
-    { title: "fix tv", id: crypto.randomUUID(), isChecked: false },
-    { title: "run miles", id: crypto.randomUUID(), isChecked: false },
-  ]);
+  const { handleAddCard, handleToggleCard } = useColumns();
+  const columnId = column.id;
+  const { ref } = useDroppable({ id: columnId });
 
-  function handleAddCard(title: string) {
-    setCards([
-      ...cards,
-      { title: title, id: crypto.randomUUID(), isChecked: false },
-    ]);
-  }
-
-  const handleToggleCard = (cardId: string, newCheckedState: boolean) => {
-    setCards((prevCards) =>
-      prevCards.map((card) =>
-        card.id === cardId ? { ...card, isChecked: newCheckedState } : card,
-      ),
-    );
-  };
+  const cards = column.cards;
+  const cardIds = cards.map((c) => c.id);
 
   return (
     <div
-      style={{ backgroundColor: `${column.background}` }}
       className="py-2 px-3 rounded-lg shadow-md/40 h-full max-h-[calc(100vh-18rem)] flex flex-col overflow-hidden"
+      style={{ backgroundColor: `${column.background}` }}
     >
       <header className="flex justify-between items-center text-gray-300 shrink-0">
         <h1 className="font-bold pl-3">{column.title}</h1>
         <div className="flex items-center">
-          {/* TODO: card count */}
           <span className="pr-1 select-none">{cards.length}</span>
           <Button>
             <ChevronsRightLeft color="#e2e8f0" />
@@ -51,15 +39,30 @@ export function Column({ column }: ColumnProps) {
         </div>
       </header>
       <ScrollArea className="flex-1  min-h-0 my-2 ">
-        <div className="flex flex-col gap-1 pr-3">
+        <div ref={ref} className="flex flex-col gap-1 pr-3">
           {cards.map((card, index) => (
             <Card
+              columnId={columnId}
+              index={index}
               key={card.id}
               card={card}
               onToggleComplete={handleToggleCard}
             ></Card>
           ))}
         </div>
+        <DragOverlay>
+          {(source) => {
+            const activeCardData = source.data as any;
+            return (
+              <CardStatic
+                columnId={columnId}
+                card={activeCardData}
+                isOverlay={true}
+                onToggleComplete={handleToggleCard}
+              />
+            );
+          }}
+        </DragOverlay>
         <ScrollBar />
       </ScrollArea>
       <footer className="flex items-center gap-1 pt-2 shrink-0">
@@ -72,6 +75,7 @@ export function Column({ column }: ColumnProps) {
         {/*   <SquarePlus color="#e2e8f0" /> */}
         {/* </Button>{" "} */}
         <ButtonToggle
+          columnId={columnId}
           placeHolder="Enter a title or paste a link"
           addFn={handleAddCard}
         >

@@ -9,7 +9,7 @@ import {
 
 export function Island() {
   const buttonStyle =
-    "flex items-center justify-center h-8 p-2 u px-2 bg-[#1C2B42] rounded-md  hover:bg-blue-700";
+    "flex items-center justify-center h-8 p-2 u px-2 bg-[#1C2B42] rounded-md  hover:bg-blue-700 ";
   const iconColor = "#5888D0";
   const textStyle = "pl-2 text-[#5888D0] font-bold text-base";
 
@@ -26,14 +26,14 @@ export function Island() {
           const { Icon, label } = item;
           return (
             <Button key={index} className={buttonStyle}>
-              <Icon color={iconColor} className="size-10" />
+              <Icon color={iconColor} className="size-5" />
               <span className={textStyle}>{label}</span>
             </Button>
           );
         })}
         <Separator className="h-5 self-center!" orientation="vertical" />
         <Button className="flex flex-1 items-center justify-center h-8 p-2 bg-transparent rounded-md  hover:bg-zinc-800">
-          <FolderKanban color="white" className="size-10" />
+          <FolderKanban color="white" className="size-5" />
           <span className="pl-2 text-white font-bold text-base">
             Switch boards
           </span>
