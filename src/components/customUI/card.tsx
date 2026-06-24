@@ -6,8 +6,9 @@ import type { CardInterface } from "../../types.ts";
 
 interface CardProps {
   card: CardInterface;
+  onToggleComplete: (id: string, isChecked: boolean) => void;
 }
-export function Card({ card }: CardProps) {
+export function Card({ card, onToggleComplete }: CardProps) {
   return (
     // change to outer button to div in order to allow inner buttons working
     <div
@@ -19,6 +20,10 @@ export function Card({ card }: CardProps) {
           className="opacity-0 group-hover:opacity-100 cursor-pointer transition-all duration-150 ease-in rounded-xl border-white bg-transparent data-[state=checked]:bg-[#82B536] data-[state=checked]:border-[#82B536] data-[state=checked]:text-black data-[state=checked]:opacity-100 "
           id="card-complete"
           defaultChecked={false}
+          checked={card.isChecked}
+          onCheckedChange={(checked) => {
+            onToggleComplete(card.id, !!checked);
+          }}
         />
         <span className="text-normal font-bold">{card.title}</span>
       </div>

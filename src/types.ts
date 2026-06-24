@@ -1,6 +1,7 @@
 export interface CardInterface {
   title: string;
   id: string;
+  isChecked: boolean;
 }
 
 export interface ColumnInterface {

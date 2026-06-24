@@ -12,15 +12,18 @@ import {
   UserRoundArrowLeft,
   Users,
 } from "lucide-react";
-import type { ColumnInterface } from '../../../types.ts'
+import type { ColumnInterface } from "../../../types.ts";
 import { useState } from "react";
 export function Board() {
   const [columns, setColumns] = useState<ColumnInterface[]>([
-  { id: crypto.randomUUID(), title: "Yesterday", background: "#533F04" },
-  { id: crypto.randomUUID(), title: "Today", background: "#164B35" },
-]);
-  function handleAddColumn(title: string){
-    setColumns([...columns, {title: title, id: crypto.randomUUID(), background: "#101204"}])
+    { id: crypto.randomUUID(), title: "Yesterday", background: "#533F04" },
+    { id: crypto.randomUUID(), title: "Today", background: "#164B35" },
+  ]);
+  function handleAddColumn(title: string) {
+    setColumns([
+      ...columns,
+      { title: title, id: crypto.randomUUID(), background: "#101204" },
+    ]);
   }
   return (
     <div className="flex flex-col border-2 border-solid border-gray-700 rounded-xl overflow-hidden w-full">
@@ -56,12 +59,16 @@ export function Board() {
         <ScrollArea className="w-full flex-1 min-h-0 mb-7 ">
           <div className="flex w-max gap-3 h-full pb-8 ">
             {columns.map((column) => (
-              <div className="w-64  shrink-0" key={column.id}>
+              <div className="w-64 h-full shrink-0" key={column.id}>
                 <Column column={column}></Column>
               </div>
             ))}
             <div className="w-64">
-              <ButtonToggle placeHolder="Enter a title" background={true} addFn={handleAddColumn}>
+              <ButtonToggle
+                placeHolder="Enter a title"
+                background={true}
+                addFn={handleAddColumn}
+              >
                 <Button className="w-64 h-10 items-center justify-start p-3 rounded-sm shrink-0 bg-gray-400 opacity-85">
                   <Plus color="#e2e8f0 " />
                   <span className="pl-1">Add another list</span>
