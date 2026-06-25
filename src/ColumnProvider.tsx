@@ -1,11 +1,16 @@
 import { createContext, useContext, type ReactNode } from "react";
 import { useImmerReducer } from "use-immer";
 import type { ColumnInterface, ColumnContextType, Action } from "./types.ts";
-
 const ColumnContext = createContext<ColumnContextType | undefined>(undefined);
 
 function boardReducer(draft: ColumnInterface[], action: Action) {
   switch (action.type) {
+    case "MOVE_CARD":
+      {
+        console.log(event);
+        // TODO:
+      }
+      break;
     case "ADD_COLUMN":
       draft.push({
         indexColumn: false,
@@ -69,6 +74,12 @@ interface ColumnProviderProps {
 export function ColumnProvider({ children }: ColumnProviderProps) {
   const [columns, dispatch] = useImmerReducer(boardReducer, initialColumns);
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const handleMove = (event: any) => {
+    dispatch({ type: "MOVE_CARD", event });
+    console.log(columns);
+  };
+
   const handleAddColumn = (title: string) => {
     dispatch({ type: "ADD_COLUMN", payload: { title } });
   };
@@ -87,7 +98,13 @@ export function ColumnProvider({ children }: ColumnProviderProps) {
 
   return (
     <ColumnContext.Provider
-      value={{ columns, handleAddColumn, handleAddCard, handleToggleCard }}
+      value={{
+        columns,
+        handleAddColumn,
+        handleAddCard,
+        handleToggleCard,
+        handleMove,
+      }}
     >
       {children}
     </ColumnContext.Provider>

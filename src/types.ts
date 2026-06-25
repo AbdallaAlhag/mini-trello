@@ -20,8 +20,13 @@ export interface ColumnContextType {
     cardId: string,
     isChecked: boolean,
   ) => void;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  handleMove: (event: any) => void;
 }
 export type Action =
+  // don't really care about dnd-kit event type
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  | { type: "MOVE_CARD"; event: any }
   | { type: "ADD_COLUMN"; payload: { title: string } }
   | { type: "ADD_CARD"; payload: { columnId: string; title: string } }
   | {

@@ -19,14 +19,17 @@ interface CardStaticProps {
   onToggleComplete: (columnId: string, id: string, isChecked: boolean) => void;
   isDragging?: boolean;
   isOverlay?: boolean;
-  ref?: (element: Element | null) => void; // Added here
+  ref?: (element: Element | null) => void;
   columnId: string;
 }
 export function Card({ card, onToggleComplete, index, columnId }: CardProps) {
   const { ref, isDragging } = useSortable({
     id: card.id,
-    data: card,
     index: index,
+    data: card,
+    type: "card",
+    accept: "card",
+    group: columnId,
   });
   return (
     <CardStatic
@@ -44,10 +47,12 @@ export function CardStatic({
   isDragging,
   isOverlay,
   onToggleComplete,
+  ref,
   ...props
 }: CardStaticProps) {
   return (
     <div
+      ref={ref}
       {...props}
       className={twMerge(
         `group flex justify-between items-center bg-[#242528] shadow-sm shadow-black/25 h-10 

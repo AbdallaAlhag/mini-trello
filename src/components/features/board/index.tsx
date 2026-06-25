@@ -13,15 +13,13 @@ import {
   Users,
 } from "lucide-react";
 import { useColumns } from "../../../ColumnProvider";
-import { useDroppable } from "@dnd-kit/react";
 import type { ColumnInterface } from "@/types";
 
 export function Board() {
   const { columns, handleAddColumn } = useColumns();
   const filteredColumns: ColumnInterface[] = columns.filter(
-    (col) => col.indexColumn === true,
+    (col) => col.indexColumn === false,
   );
-  const { ref } = useDroppable({ id: "0000" });
   return (
     <div className="flex flex-col border-2 border-solid border-gray-700 rounded-xl overflow-hidden w-full">
       <header className="flex items-center justify-between bg-linear-to-r from-violet-900 to-gray-700 rounded-t-xl h-20">
@@ -54,7 +52,7 @@ export function Board() {
       </header>
       <main className="bg-linear-to-br from-violet-900 to-fuchsia-700  rounded-b-xl flex flex-1 flex-col p-2 min-h-0 ">
         <ScrollArea className="w-full flex-1 min-h-0 mb-7 ">
-          <div ref={ref} className="flex w-max gap-3 h-full pb-8 ">
+          <div className="flex w-max gap-3 h-full pb-8 ">
             {filteredColumns.map((column: ColumnInterface) => (
               <div className="w-64 h-full shrink-0" key={column.id}>
                 <Column column={column}></Column>

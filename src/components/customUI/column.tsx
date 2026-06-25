@@ -6,6 +6,7 @@ import { ButtonToggle } from "./buttonToggle";
 import type { ColumnInterface, CardInterface } from "../../types.ts";
 
 import { DragOverlay, useDroppable } from "@dnd-kit/react";
+import { CollisionPriority } from "@dnd-kit/abstract";
 import { useColumns } from "@/ColumnProvider.tsx";
 
 interface ColumnProps {
@@ -15,11 +16,15 @@ interface ColumnProps {
 export function Column({ column }: ColumnProps) {
   const { handleAddCard, handleToggleCard } = useColumns();
   const columnId = column.id;
-  const { ref } = useDroppable({ id: columnId });
+  const { ref } = useDroppable({
+    id: columnId,
+    type: "column",
+    accept: "card",
+    collisionPriority: CollisionPriority.Low,
+  });
 
   // filter our index column
   const cards = column.cards;
-  console.log(cards);
   // const cards =
   //   column.filter((col: ColumnInterface) => col.indexColumn === true)[0]
   //     ?.cards || [];
