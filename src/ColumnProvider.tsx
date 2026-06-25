@@ -1,13 +1,14 @@
-import { createContext, useContext,  type ReactNode } from 'react';
+import { createContext, useContext, type ReactNode } from "react";
 import { useImmerReducer } from "use-immer";
-import type { ColumnInterface, ColumnContextType,Action } from "./types.ts";
+import type { ColumnInterface, ColumnContextType, Action } from "./types.ts";
 
-const ColumnContext = createContext<ColumnContextType| undefined>(undefined);
+const ColumnContext = createContext<ColumnContextType | undefined>(undefined);
 
 function boardReducer(draft: ColumnInterface[], action: Action) {
   switch (action.type) {
     case "ADD_COLUMN":
       draft.push({
+        indexColumn: false,
         id: crypto.randomUUID(),
         title: action.payload.title,
         background: "#101204",
@@ -38,21 +39,23 @@ function boardReducer(draft: ColumnInterface[], action: Action) {
   }
 }
 
-
 const initialColumns: ColumnInterface[] = [
   {
+    indexColumn: true,
     id: crypto.randomUUID(),
     title: "Index",
     background: "#533F04",
     cards: [{ title: "hw", id: crypto.randomUUID(), isChecked: false }],
   },
   {
+    indexColumn: false,
     id: crypto.randomUUID(),
     title: "Yesterday",
     background: "#533F04",
     cards: [{ title: "hw", id: crypto.randomUUID(), isChecked: false }],
   },
   {
+    indexColumn: false,
     id: crypto.randomUUID(),
     title: "Today",
     background: "#164B35",
@@ -74,18 +77,25 @@ export function ColumnProvider({ children }: ColumnProviderProps) {
     dispatch({ type: "ADD_CARD", payload: { columnId, title } });
   };
 
-  const handleToggleCard = (columnId: string, cardId: string, isChecked: boolean) => {
+  const handleToggleCard = (
+    columnId: string,
+    cardId: string,
+    isChecked: boolean,
+  ) => {
     dispatch({ type: "TOGGLE_CARD", payload: { columnId, cardId, isChecked } });
   };
 
-return (
-  <ColumnContext.Provider value={{ columns, handleAddColumn, handleAddCard, handleToggleCard }}>
-    {children}
-  </ColumnContext.Provider>
-);
+  return (
+    <ColumnContext.Provider
+      value={{ columns, handleAddColumn, handleAddCard, handleToggleCard }}
+    >
+      {children}
+    </ColumnContext.Provider>
+  );
 }
 
 // --- Custom Hook for Easy Consumption ---
+// eslint-disable-next-line react-refresh/only-export-components
 export function useColumns() {
   const context = useContext(ColumnContext);
   if (!context) {
@@ -93,4 +103,3 @@ export function useColumns() {
   }
   return context;
 }
-

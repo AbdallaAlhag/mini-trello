@@ -4,7 +4,6 @@ import { Card, CardStatic } from "./card";
 import { ScrollArea, ScrollBar } from "../ui/scroll-area";
 import { ButtonToggle } from "./buttonToggle";
 import type { ColumnInterface, CardInterface } from "../../types.ts";
-import { useState } from "react";
 
 import { DragOverlay, useDroppable } from "@dnd-kit/react";
 import { useColumns } from "@/ColumnProvider.tsx";
@@ -18,8 +17,13 @@ export function Column({ column }: ColumnProps) {
   const columnId = column.id;
   const { ref } = useDroppable({ id: columnId });
 
+  // filter our index column
   const cards = column.cards;
-  const cardIds = cards.map((c) => c.id);
+  console.log(cards);
+  // const cards =
+  //   column.filter((col: ColumnInterface) => col.indexColumn === true)[0]
+  //     ?.cards || [];
+  // const cardIds = cards.map((c) => c.id);
 
   return (
     <div
@@ -40,7 +44,7 @@ export function Column({ column }: ColumnProps) {
       </header>
       <ScrollArea className="flex-1  min-h-0 my-2 ">
         <div ref={ref} className="flex flex-col gap-1 pr-3">
-          {cards.map((card, index) => (
+          {cards.map((card: CardInterface, index: number) => (
             <Card
               columnId={columnId}
               index={index}
@@ -52,7 +56,7 @@ export function Column({ column }: ColumnProps) {
         </div>
         <DragOverlay>
           {(source) => {
-            const activeCardData = source.data as any;
+            const activeCardData = source.data as CardInterface;
             return (
               <CardStatic
                 columnId={columnId}

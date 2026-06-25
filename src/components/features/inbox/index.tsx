@@ -2,7 +2,6 @@ import { Card, CardStatic } from "@/components/customUI/card";
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Ellipsis, Inbox as InboxIcon, ListFilter } from "lucide-react";
-import { useState } from "react";
 import { ButtonToggle } from "@/components/customUI/buttonToggle";
 import type { CardInterface } from "../../../types.ts";
 
@@ -12,7 +11,9 @@ import { useColumns } from "../../../ColumnProvider";
 
 export function Inbox() {
   const { columns, handleAddCard, handleToggleCard } = useColumns();
-  const cards = columns[0].cards;
+  // const cards = columns[0].cards;
+  // grab our index columns
+  const cards = columns.find((col) => col.indexColumn === true)?.cards || [];
   const columnId = columns[0].id;
   return (
     <div className="flex flex-col border-2 border-solid border-gray-700 rounded-xl w-[35%] ">
@@ -44,7 +45,7 @@ export function Inbox() {
         </ButtonToggle>
         <ScrollArea className="flex-1 min-h-0 pt-3">
           <div className="flex flex-col gap-3 m-1 mb-15 mr-4">
-            {cards.map((card, index) => (
+            {cards.map((card: CardInterface, index: number) => (
               <Card
                 columnId={columnId}
                 index={index}
@@ -56,7 +57,7 @@ export function Inbox() {
           </div>
           <DragOverlay>
             {(source) => {
-              const activeCardData = source.data as any;
+              const activeCardData = source.data as CardInterface;
               return (
                 <CardStatic
                   columnId={columnId}

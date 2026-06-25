@@ -32,7 +32,6 @@ export function ButtonToggle({
 
   const handleAdd = () => {
     if (!inputValue.trim()) return;
-    console.log("Adding card:", inputValue);
     addFn(columnId, inputValue);
     setInputValue("");
     setIsEditing(false);
@@ -111,6 +110,7 @@ export function ButtonToggle({
   }
 
   if (isValidElement(children)) {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     return cloneElement(children as React.ReactElement<any>, {
       onClick: () => setIsEditing(true),
     });

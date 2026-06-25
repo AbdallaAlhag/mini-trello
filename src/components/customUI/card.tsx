@@ -11,7 +11,6 @@ interface CardProps {
   onToggleComplete: (columnId: string, id: string, isChecked: boolean) => void;
   isDragging?: boolean;
   isOverlay?: boolean;
-  [key: string]: any;
   index: number;
   columnId: string;
 }
@@ -20,18 +19,15 @@ interface CardStaticProps {
   onToggleComplete: (columnId: string, id: string, isChecked: boolean) => void;
   isDragging?: boolean;
   isOverlay?: boolean;
-  [key: string]: any;
-
+  ref?: (element: Element | null) => void; // Added here
   columnId: string;
 }
 export function Card({ card, onToggleComplete, index, columnId }: CardProps) {
-  if (card.id === null || card == null || index == null) return;
   const { ref, isDragging } = useSortable({
     id: card.id,
     data: card,
     index: index,
   });
-  console.log(card.id, card, index);
   return (
     <CardStatic
       columnId={columnId}

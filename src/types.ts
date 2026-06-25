@@ -5,6 +5,7 @@ export interface CardInterface {
 }
 
 export interface ColumnInterface {
+  indexColumn: boolean;
   id: string;
   title: string;
   background: string;
