@@ -25,12 +25,13 @@ interface CardStaticProps {
   columnId: string;
 }
 export function Card({ card, onToggleComplete, index, columnId }: CardProps) {
-  console.log(card.id, card, index);
+  if (card.id === null || card == null || index == null) return;
   const { ref, isDragging } = useSortable({
     id: card.id,
     data: card,
     index: index,
   });
+  console.log(card.id, card, index);
   return (
     <CardStatic
       columnId={columnId}
