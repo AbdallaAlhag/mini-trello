@@ -8,7 +8,6 @@ import type { ColumnInterface, CardInterface } from "../../types.ts";
 import { DragOverlay, useDroppable } from "@dnd-kit/react";
 import { CollisionPriority } from "@dnd-kit/abstract";
 import { useColumns } from "@/ColumnProvider.tsx";
-
 interface ColumnProps {
   column: ColumnInterface;
 }
@@ -25,6 +24,7 @@ export function Column({ column }: ColumnProps) {
 
   // filter our index column
   const cards = column.cards;
+  console.log("updated cards: ", cards);
   // const cards =
   //   column.filter((col: ColumnInterface) => col.indexColumn === true)[0]
   //     ?.cards || [];
@@ -47,33 +47,35 @@ export function Column({ column }: ColumnProps) {
           </Button>
         </div>
       </header>
-      <ScrollArea className="flex-1  min-h-0 my-2 ">
-        <div ref={ref} className="flex flex-col gap-1 pr-3">
-          {cards.map((card: CardInterface, index: number) => (
-            <Card
-              columnId={columnId}
-              index={index}
-              key={card.id}
-              card={card}
-              onToggleComplete={handleToggleCard}
-            ></Card>
-          ))}
-        </div>
-        <DragOverlay>
-          {(source) => {
-            const activeCardData = source.data as CardInterface;
-            return (
-              <CardStatic
+      <div ref={ref} className="flex-1 min-h-0 my-2 flex flex-col">
+        <ScrollArea className="flex-1  min-h-0 my-2 ">
+          <div className="flex flex-col gap-1 pr-3">
+            {cards.map((card: CardInterface, index: number) => (
+              <Card
                 columnId={columnId}
-                card={activeCardData}
-                isOverlay={true}
+                index={index}
+                key={card.id}
+                card={card}
                 onToggleComplete={handleToggleCard}
-              />
-            );
-          }}
-        </DragOverlay>
-        <ScrollBar />
-      </ScrollArea>
+              ></Card>
+            ))}
+          </div>
+          {/* <DragOverlay> */}
+          {/*   {(source) => { */}
+          {/*     const activeCardData = source.data as CardInterface; */}
+          {/*     return ( */}
+          {/*       <CardStatic */}
+          {/*         columnId={columnId} */}
+          {/*         card={activeCardData} */}
+          {/*         isOverlay={true} */}
+          {/*         onToggleComplete={handleToggleCard} */}
+          {/*       /> */}
+          {/*     ); */}
+          {/*   }} */}
+          {/* </DragOverlay> */}
+          <ScrollBar />
+        </ScrollArea>
+      </div>
       <footer className="flex items-center gap-1 pt-2 shrink-0">
         {/* <Button className="flex-1 items-center justify-start p-1 rounded-sm"> */}
         {/*   <Plus color="#e2e8f0" /> */}
