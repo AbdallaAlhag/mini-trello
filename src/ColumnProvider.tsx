@@ -2,6 +2,7 @@ import { createContext, useContext, type ReactNode } from "react";
 import { useImmerReducer } from "use-immer";
 import { current } from "immer";
 import type { ColumnInterface, ColumnContextType, Action } from "./types.ts";
+import { flushSync } from "react-dom";
 const ColumnContext = createContext<ColumnContextType | undefined>(undefined);
 
 function boardReducer(draft: ColumnInterface[], action: Action) {
@@ -132,7 +133,6 @@ export function ColumnProvider({ children }: ColumnProviderProps) {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleMove = (event: any) => {
     dispatch({ type: "MOVE_CARD", event });
-    console.log("NEWMOVED");
   };
 
   const handleAddColumn = (title: string) => {

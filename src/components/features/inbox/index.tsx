@@ -22,7 +22,7 @@ export function Inbox() {
     id: columnId,
     type: "column",
     accept: "card",
-    collisionPriority: CollisionPriority.Low,
+    // collisionPriority: CollisionPriority.Low,
   });
   return (
     <div className="flex flex-col border-2 border-solid border-gray-700 rounded-xl w-[35%] ">

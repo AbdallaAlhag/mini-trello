@@ -8,6 +8,7 @@ import type { ColumnInterface, CardInterface } from "../../types.ts";
 import { DragOverlay, useDroppable } from "@dnd-kit/react";
 import { CollisionPriority } from "@dnd-kit/abstract";
 import { useColumns } from "@/ColumnProvider.tsx";
+import { useEffect } from "react";
 interface ColumnProps {
   column: ColumnInterface;
 }
@@ -25,6 +26,7 @@ export function Column({ column }: ColumnProps) {
   // filter our index column
   const cards = column.cards;
   console.log("updated cards: ", cards);
+  // console.log("updated cards: ", cards);
   // const cards =
   //   column.filter((col: ColumnInterface) => col.indexColumn === true)[0]
   //     ?.cards || [];
