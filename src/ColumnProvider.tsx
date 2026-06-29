@@ -19,16 +19,14 @@ function boardReducer(draft: ColumnInterface[], action: Action) {
       const newColumnId = operation.source.group;
       const oldColumnId = operation.source.initialGroup;
 
-      // console.log("old column id: ", oldColumnId);
-      // console.log("new column id: ", newColumnId);
-
+      console.log("old column id: ", oldColumnId);
+      console.log("new column id: ", newColumnId);
       const newCol = draft.find(
         (col: ColumnInterface) => col.id === newColumnId,
       );
       const oldCol = draft.find(
         (col: ColumnInterface) => col.id === oldColumnId,
       );
-
       if (!oldCol || !newCol) return;
 
       // console.log("old column index: ", oldCardIndex);

@@ -8,6 +8,7 @@ import type { CardInterface } from "../../../types.ts";
 import { DragOverlay, useDroppable } from "@dnd-kit/react";
 import { CollisionPriority } from "@dnd-kit/abstract";
 
+import { useSortable } from "@dnd-kit/react/sortable";
 import { useColumns } from "../../../ColumnProvider";
 
 export function Inbox() {
@@ -18,12 +19,27 @@ export function Inbox() {
   // const columnId = columns[0].id;
   const columnId = columns.find((col) => col.indexColumn === true)?.id || "0";
 
+  const { ref: fakeRef } = useSortable({
+    id: `fake-${columnId}`,
+    index: 0,
+    data: { columnId },
+    type: "card",
+    accept: "card",
+    group: columnId,
+  });
+
   const { ref } = useDroppable({
     id: columnId,
     type: "column",
     accept: "card",
+    data: {
+      type: "column",
+      columnId: columnId,
+      group: columnId,
+    },
     // collisionPriority: CollisionPriority.Low,
   });
+  console.log("updated index cards: ", cards);
   return (
     <div className="flex flex-col border-2 border-solid border-gray-700 rounded-xl w-[35%] ">
       <header className="flex items-center justify-between bg-[#142238] rounded-t-xl h-20">
@@ -52,12 +68,17 @@ export function Inbox() {
             Add a card
           </Button>
         </ButtonToggle>
-        <ScrollArea className="flex-1 h-full pt-3">
-          {/* TODO: make height full */}
-          <div ref={ref} className="flex flex-col gap-3 m-1 mb-15 mr-4 h-full">
+        <ScrollArea className="flex-1 w-full pt-3">
+          <div
+            ref={ref}
+            className="flex flex-col gap-3 m-1 mb-15 mr-4 min-h-75 grow h-full"
+          >
             {cards.length === 0 ? (
-              <div className="flex-1 flex items-center justify-center border-2 border-dashed border-neutral-800 rounded-lg text-neutral-600 text-xs p-4 pointer-events-none select-none">
-                Drop card here
+              <div
+                ref={fakeRef}
+                className=" border-2 border-dashed border-neutral-800 rounded-lg text-neutral-600 text-xs p-4  select-none"
+              >
+                Drop items here
               </div>
             ) : (
               cards.map((card: CardInterface, index: number) => (
@@ -71,21 +92,30 @@ export function Inbox() {
               ))
             )}
           </div>
-          <DragOverlay>
-            {(source) => {
-              const activeCardData = source.data as CardInterface;
-              return (
-                <CardStatic
-                  columnId={columnId}
-                  card={activeCardData}
-                  isOverlay={true}
-                  onToggleComplete={handleToggleCard}
-                />
-              );
-            }}
-          </DragOverlay>
+          {/* <DragOverlay> */}
+          {/*   {(source) => { */}
+          {/*     const activeCardData = source.data as CardInterface; */}
+          {/*     return ( */}
+          {/*       <CardStatic */}
+          {/*         columnId={columnId} */}
+          {/*         card={activeCardData} */}
+          {/*         isOverlay={true} */}
+          {/*         onToggleComplete={handleToggleCard} */}
+          {/*       /> */}
+          {/*     ); */}
+          {/*   }} */}
+          {/* </DragOverlay> */}
         </ScrollArea>
       </main>
     </div>
   );
+}
+{
+  /* <div className="flex-1 min-h-37.5 flex items-center justify-center border-2 border-dashed border-neutral-800 rounded-lg text-neutral-600 text-xs p-4  select-none"> */
+}
+{
+  /*    Drop card here */
+}
+{
+  /* </div> */
 }

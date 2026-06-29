@@ -8,7 +8,7 @@ import type { ColumnInterface, CardInterface } from "../../types.ts";
 import { DragOverlay, useDroppable } from "@dnd-kit/react";
 import { CollisionPriority } from "@dnd-kit/abstract";
 import { useColumns } from "@/ColumnProvider.tsx";
-import { useEffect } from "react";
+import { useSortable } from "@dnd-kit/react/sortable";
 interface ColumnProps {
   column: ColumnInterface;
 }
@@ -16,11 +16,26 @@ interface ColumnProps {
 export function Column({ column }: ColumnProps) {
   const { handleAddCard, handleToggleCard } = useColumns();
   const columnId = column.id;
+  const { ref: fakeRef } = useSortable({
+    id: `fake-${columnId}`,
+    index: 0,
+    data: { columnId },
+    type: "card",
+    accept: "card",
+    group: columnId,
+  });
+
   const { ref } = useDroppable({
     id: columnId,
     type: "column",
     accept: "card",
-    collisionPriority: CollisionPriority.Low,
+    data: {
+      type: "column",
+      columnId: columnId,
+      group: columnId,
+    },
+
+    // collisionPriority: CollisionPriority.Low,
   });
 
   // filter our index column
@@ -49,18 +64,27 @@ export function Column({ column }: ColumnProps) {
           </Button>
         </div>
       </header>
-      <div ref={ref} className="flex-1 min-h-0 my-2 flex flex-col">
+      <div ref={ref} className="flex-1  my-2 flex flex-col">
         <ScrollArea className="flex-1  min-h-0 my-2 ">
-          <div className="flex flex-col gap-1 pr-3">
-            {cards.map((card: CardInterface, index: number) => (
-              <Card
-                columnId={columnId}
-                index={index}
-                key={card.id}
-                card={card}
-                onToggleComplete={handleToggleCard}
-              ></Card>
-            ))}
+          <div className="flex flex-col gap-1 pr-3 h-full min-h-10 grow">
+            {cards.length === 0 ? (
+              <div
+                ref={fakeRef}
+                className=" border-2 border-dashed border-neutral-800 rounded-lg text-neutral-600 text-xs p-4  select-none"
+              >
+                Drop items here
+              </div>
+            ) : (
+              cards.map((card: CardInterface, index: number) => (
+                <Card
+                  columnId={columnId}
+                  index={index}
+                  key={card.id}
+                  card={card}
+                  onToggleComplete={handleToggleCard}
+                ></Card>
+              ))
+            )}
           </div>
           {/* <DragOverlay> */}
           {/*   {(source) => { */}
